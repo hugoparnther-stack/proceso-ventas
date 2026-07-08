@@ -1,68 +1,41 @@
-"""
-Script para procesar ventas.
-
-Incluye:
-- Lista de ventas (producto, precio).
-- calcular_total(*precios): suma cualquier cantidad de precios.
-- registrar_compra(**datos): registra información del cliente (nombre, ciudad,
-  método de pago, etc.) de forma flexible.
-"""
+# Ejercicio: procesar ventas con *args y **kwargs
 
 ventas = [
     ("Laptop", 5200),
     ("Mouse", 120),
     ("Monitor", 1800),
     ("Teclado", 250),
-    ("Tablet", 2200),
+    ("Tablet", 2200)
 ]
 
-
+# suma cualquier cantidad de precios que le pasemos
 def calcular_total(*precios):
-    """Suma cualquier cantidad de precios recibidos como argumentos posicionales."""
-    return sum(precios)
+    total = 0
+    for p in precios:
+        total += p
+    return total
 
-
+# recibe datos del cliente, pueden ser los que sea
 def registrar_compra(**datos):
-    """
-    Registra la información de una compra a partir de datos arbitrarios del cliente.
-    Ejemplo de uso: registrar_compra(nombre="Ana", ciudad="Lima", metodo_pago="Tarjeta")
-    """
-    print("Registro de compra:")
-    for clave, valor in datos.items():
-        print(f"  {clave}: {valor}")
-    print()
-    return datos
+    print("Datos del cliente:")
+    for key in datos:
+        print(key, "->", datos[key])
 
 
-def main():
-    print("=== Lista de ventas ===")
-    for producto, precio in ventas:
-        print(f"  {producto}: ${precio}")
-    print()
+# lista de precios sacados de la lista de ventas
+precios = []
+for producto, precio in ventas:
+    precios.append(precio)
 
-    # calcular_total con los precios de la lista de ventas
-    precios = [precio for _, precio in ventas]
-    total = calcular_total(*precios)
-    print(f"Total de ventas: ${total}\n")
+print("Ventas:")
+for producto, precio in ventas:
+    print(producto, precio)
 
-    # calcular_total con cualquier cantidad de argumentos
-    print(f"Ejemplo suelto: calcular_total(100, 200, 300) = {calcular_total(100, 200, 300)}\n")
+total_ventas = calcular_total(*precios)
+print("Total:", total_ventas)
 
-    # registrar_compra con distintos datos de cliente
-    registrar_compra(
-        nombre="Carlos Pérez",
-        ciudad="Bogotá",
-        metodo_pago="Tarjeta de crédito",
-        producto="Laptop",
-        total=5200,
-    )
+# prueba con otros numeros sueltos
+print(calcular_total(10, 20, 30))
 
-    registrar_compra(
-        nombre="María Gómez",
-        ciudad="Ciudad de México",
-        metodo_pago="Efectivo",
-    )
-
-
-if __name__ == "__main__":
-    main()
+registrar_compra(nombre="Carlos", ciudad="Bogota", metodo_pago="tarjeta")
+registrar_compra(nombre="Maria", ciudad="CDMX", metodo_pago="efectivo", producto="Laptop")
